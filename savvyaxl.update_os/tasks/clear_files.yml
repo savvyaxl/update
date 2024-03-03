@@ -1,0 +1,28 @@
+- name: Clear the files
+  file:
+    state: absent
+    path: "{{item}}"
+  delegate_to: localhost
+  become: false
+  run_once: true
+  loop:
+    - "{{mail_body_file}}"
+    - "{{start_file}}"
+    - "{{connected_file}}"
+    - "{{updated_file}}"
+    - "{{needsrestart_file}}"
+    - "{{restared_file}}"
+    - "{{tmp1_file}}"
+    - "{{tmp2_file}}"
+    - "{{tmp3_file}}"
+    - "{{tmp4_file}}"
+    - "{{tmp5_file}}"
+    - "{{tmp6_file}}"
+
+# - name: delete all
+#   file:
+#     state: absent
+#     path: /tmp/{{inventory_hostname}}.body.html
+#   delegate_to: localhost
+#   become: false
+

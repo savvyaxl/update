@@ -1,0 +1,20 @@
+---
+# defaults file for savvyaxl.update_os
+mail_body_file: "/tmp/ansible_mailing_tmtghujm"
+start_file: "/tmp/ansible_start_tmtghujm"
+connected_file: "/tmp/ansible_connected_tmtghujm"
+needsrestart_file: "/tmp/ansible_needsrestart_tmtghujm"
+updated_file: "/tmp/ansible_updated_tmtghujm"
+restared_file: "/tmp/ansible_restared_tmtghujm"
+delegation: "localhost"
+no_restart:
+  - 4670k.nfs.info
+  - node01.nfs.info
+  - node02.nfs.info
+  - localhost
+tmp1_file: "/tmp/ansible_tmp1_tmtghujm"
+tmp2_file: "/tmp/ansible_tmp2_tmtghujm"
+tmp3_file: "/tmp/ansible_tmp3_tmtghujm"
+tmp4_file: "/tmp/ansible_tmp4_tmtghujm"
+tmp5_file: "/tmp/ansible_tmp5_tmtghujm"
+tmp6_file: "/tmp/ansible_tmp6_tmtghujm"

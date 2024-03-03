@@ -1,0 +1,17 @@
+---
+# handlers file for savvyaxl.update_os
+- name: Perform reboot
+  when: inventory_hostname not in no_restart
+  become: true
+  async: 1
+  poll: 0
+  timeout: 10
+  ignore_errors: yes
+  register: rebooted
+  shell: sleep 5 #&& reboot
+
+- name: Wait for 200 seconds after the reboot
+  #when: inventory_hostname not in no_restart
+  ansible.builtin.wait_for:
+    timeout: 5
+  delegate_to: "{{delegation}}"
