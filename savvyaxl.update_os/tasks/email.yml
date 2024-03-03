@@ -3,39 +3,27 @@
     src: body.j2
     dest: /tmp/{{inventory_hostname}}.body.html
   delegate_to: "{{delegation}}"
-  become: false
-
-- name: Use j2 template to create summery
-  delegate_to: "{{delegation}}"
-  become: false
-  template:
-    src: email_body.j2
-    dest: /tmp/{{inventory_hostname}}.summery.html
 
 - name: Create the body and add summery file
   run_once: True
   delegate_to: "{{delegation}}"
-  become: false
   shell: cat {{ tmp4_file }} >> {{mail_body_file}}
 
 - name: Start time
   shell: |
     echo "<p>Start: {{ start_date.stdout | default(omit) }}</p>" >> {{ mail_body_file }}
   delegate_to: "{{delegation}}"
-  become: false
   run_once: True
 
 - name: End time
   shell: |
     echo "<p>End: {{ end_date.stdout | default(omit) }}</p>" >> {{ mail_body_file }}
   delegate_to: "{{delegation}}"
-  become: false
   run_once: True
 
 - name: add the individual runs
   shell: "cat /tmp/{{inventory_hostname}}.body.html  >> {{mail_body_file}}"
   delegate_to: "{{delegation}}"
-  become: false
 
 - name: get the mail body to variable
   register: mail_body
@@ -62,3 +50,9 @@
   until: emailresult is not failed
   retries: 3
   delay: 20
+
+- name: Remove individual body part
+  delegate_to: "{{delegation}}"
+  ansible.builtin.file:
+    path: /tmp/{{inventory_hostname}}.body.html
+    state: absent

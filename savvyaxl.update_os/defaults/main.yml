@@ -1,18 +1,29 @@
 ---
 # defaults file for savvyaxl.update_os
-mail_body_file: "/tmp/ansible_mailing_tmtghujm"
-start_file: "/tmp/ansible_start_tmtghujm"
-connected_file: "/tmp/ansible_connected_tmtghujm"
-needsrestart_file: "/tmp/ansible_needsrestart_tmtghujm"
-updated_file: "/tmp/ansible_updated_tmtghujm"
-restared_file: "/tmp/ansible_restared_tmtghujm"
+random: tmtghujm
+mail_body_file: "/tmp/ansible_mailing_{{random}}"
+start_file: "/tmp/ansible_start_{{random}}"
+connected_file: "/tmp/ansible_connected_{{random}}"
+needsrestart_file: "/tmp/ansible_needsrestart_{{random}}"
+updated_file: "/tmp/ansible_updated_{{random}}"
+restared_file: "/tmp/ansible_restared_{{random}}"
 delegation: "localhost"
+tmp1_file: "/tmp/ansible_tmp1_{{random}}"
+tmp1_file: "/tmp/ansible_tmp2_{{random}}"
+tmp3_file: "/tmp/ansible_tmp3_{{random}}"
+tmp4_file: "/tmp/ansible_tmp4_{{random}}"
 no_restart:
   - node02.nfs.info
   - localhost
-tmp1_file: "/tmp/ansible_tmp1_tmtghujm"
-tmp2_file: "/tmp/ansible_tmp2_tmtghujm"
-tmp3_file: "/tmp/ansible_tmp3_tmtghujm"
-tmp4_file: "/tmp/ansible_tmp4_tmtghujm"
-tmp5_file: "/tmp/ansible_tmp5_tmtghujm"
-tmp6_file: "/tmp/ansible_tmp6_tmtghujm"
+
+clear:
+  - "{{mail_body_file}}"
+  - "{{start_file}}"
+  - "{{connected_file}}"
+  - "{{needsrestart_file}}"
+  - "{{updated_file}}"
+  - "{{restared_file}}"
+  - "{{tmp1_file}}"
+  - "{{tmp2_file}}"
+  - "{{tmp3_file}}"
+  - "{{tmp4_file}}"
