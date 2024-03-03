@@ -9,7 +9,7 @@ updated_file: "/tmp/ansible_updated_{{random}}"
 restared_file: "/tmp/ansible_restared_{{random}}"
 delegation: "localhost"
 tmp1_file: "/tmp/ansible_tmp1_{{random}}"
-tmp1_file: "/tmp/ansible_tmp2_{{random}}"
+tmp2_file: "/tmp/ansible_tmp2_{{random}}"
 tmp3_file: "/tmp/ansible_tmp3_{{random}}"
 tmp4_file: "/tmp/ansible_tmp4_{{random}}"
 no_restart:
