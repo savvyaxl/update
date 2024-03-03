@@ -8,8 +8,6 @@ updated_file: "/tmp/ansible_updated_tmtghujm"
 restared_file: "/tmp/ansible_restared_tmtghujm"
 delegation: "localhost"
 no_restart:
-  - 4670k.nfs.info
-  - node01.nfs.info
   - node02.nfs.info
   - localhost
 tmp1_file: "/tmp/ansible_tmp1_tmtghujm"
