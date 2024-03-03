@@ -8,10 +8,10 @@
   timeout: 10
   ignore_errors: yes
   register: rebooted
-  shell: sleep 5 #&& reboot
+  shell: sleep 5 && reboot
 
 - name: Wait for 200 seconds after the reboot
   #when: inventory_hostname not in no_restart
   ansible.builtin.wait_for:
-    timeout: 5
+    timeout: 200
   delegate_to: "{{delegation}}"
