@@ -1,0 +1,8 @@
+---
+- name: Backup the website
+  hosts: "{{ my_hosts | default ('localhost')}}"
+  remote_user: alex
+  become_user: root
+  gather_facts: false
+  roles:
+    - savvyaxl.backup_web

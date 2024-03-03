@@ -1,0 +1,12 @@
+---
+# defaults file for savvyaxl.backup_web
+sql_dump_dest: /srv/mysql/backup/beer.{{ inventory_hostname }}.{{ tstamp.stdout }}.sql
+sql_dump_source: /srv/mysql/backup/beer.{{ inventory_hostname }}.{{ tstamp.stdout }}.sql.bz2
+sql_dump_final: ./../data/sql/
+site_dump_path: /var/www/html/beer
+site_exclude_path:
+  - /var/www/html/beer/repos/*
+  - /var/www/html/beer/Cars/*
+  - /var/www/html/beer/Tri200302/*
+site_dump_source: /srv/mysql/backup/beer.{{ inventory_hostname }}.{{ tstamp.stdout }}.tar.bz2
+site_dump_final: ./../data/site/

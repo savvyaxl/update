@@ -2,3 +2,6 @@
 4670k.nfs.info
 node02.nfs.info
 node01.nfs.info
+
+[web]
+node01.nfs.info

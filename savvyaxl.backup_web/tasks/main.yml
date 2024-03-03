@@ -1,0 +1,43 @@
+---
+# tasks file for savvyaxl.backup_web
+- shell: "date +%Y%m%d%H%M%S"
+  register: tstamp
+
+- name: Dump database
+  shell: podman exec mysql mysqldump --routines -h localhost -u"{{ users.root.name }}" -p"{{ users.root.password }}" beer > "{{ sql_dump_dest }}"
+
+- name: Compress the sql dump
+  community.general.archive:
+    path: "{{ sql_dump_dest }}"
+    dest: "{{ sql_dump_source }}"
+    format: bz2
+    remove: true
+
+- name: Copy the sql to the ansible manager
+  fetch:
+    src: "{{ sql_dump_source }}"
+    dest: "{{ sql_dump_final }}"
+    flat: true
+
+- name: Compress the sql file using BZ2
+  community.general.archive:
+    path: "{{ site_dump_path }}"
+    dest: "{{ site_dump_source }}"
+    format: bz2
+    exclude_path: "{{site_exclude_path}}"
+
+- name: Copy the site to the ansible manager
+  fetch:
+    src: "{{ site_dump_source }}"
+    dest: "{{ site_dump_final }}"
+    flat: true
+
+- name: delete the "{{ sql_dump_source }}"
+  file:
+    name: "{{ sql_dump_source }}"
+    state: absent
+
+- name: delete the "{{ site_dump_source }}"
+  file:
+    name: "{{ site_dump_source }}"
+    state: absent
