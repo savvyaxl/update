@@ -4,6 +4,7 @@ no_restart:
   - node02.nfs.info
   - localhost
 random: tmtghujm
+my_timeout: 200
 mail_body_file: "/tmp/ansible_mailing_{{random}}"
 start_file: "/tmp/ansible_start_{{random}}"
 connected_file: "/tmp/ansible_connected_{{random}}"

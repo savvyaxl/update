@@ -1,10 +1,9 @@
 ---
 - name: Update Red Hat and Fedora
-  hosts: "{{ my_hosts | default ('localhost')}}"
+  hosts: "{{ my_hosts | default ('localhost') }}"
   become: false
   gather_facts: false
+  order: sorted
   
   roles:
     - role: savvyaxl.update_os 
-
-           

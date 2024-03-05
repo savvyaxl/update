@@ -1,37 +1,48 @@
 - name: Use j2 template to create individual body part
-  template:
-    src: body.j2
-    dest: /tmp/{{inventory_hostname}}.body.html
   delegate_to: "{{delegation}}"
+  ansible.builtin.template:
+    src: body.j2
+    dest: "/tmp/{{inventory_hostname}}.body.html"
 
 - name: Create the body and add summery file
   run_once: True
   delegate_to: "{{delegation}}"
-  shell: cat {{ tmp4_file }} >> {{mail_body_file}}
+  ansible.builtin.shell: cat {{ tmp4_file }} >> {{mail_body_file}}
 
 - name: Start time
-  shell: |
-    echo "<p>Start: {{ start_date.stdout | default(omit) }}</p>" >> {{ mail_body_file }}
   delegate_to: "{{delegation}}"
   run_once: True
+  ansible.builtin.shell: |
+    echo "<p>Start: {{ start_date.stdout | default(omit) }}</p>" >> {{ mail_body_file }}
 
 - name: End time
-  shell: |
-    echo "<p>End: {{ end_date.stdout | default(omit) }}</p>" >> {{ mail_body_file }}
   delegate_to: "{{delegation}}"
   run_once: True
+  ansible.builtin.shell: |
+    echo "<p>End: {{ end_date.stdout | default(omit) }}</p>" >> {{ mail_body_file }}
 
 - name: add the individual runs
-  shell: "cat /tmp/{{inventory_hostname}}.body.html  >> {{mail_body_file}}"
   delegate_to: "{{delegation}}"
+  run_once: True
+  ansible.builtin.shell: |
+    for x in /tmp/*.body.html
+    do
+    cat ${x}  >> {{mail_body_file}}
+    done
 
 - name: get the mail body to variable
   register: mail_body
-  command: "cat {{mail_body_file}}"
   delegate_to: "{{delegation}}"
   run_once: True
+  ansible.builtin.command: "cat {{mail_body_file}}"
 
 - name: Sending an e-mail using gmail with app key
+  delegate_to: "{{delegation}}"
+  run_once: True
+  register: emailresult
+  until: emailresult is not failed
+  retries: 3
+  delay: 20
   community.general.mail:
     host: "{{ gmail.host }}"
     port: "{{ gmail.port }}"
@@ -44,12 +55,6 @@
     #body: "{{my_new_fact}}"
     body: "{{mail_body.stdout}}"
     #secure: "{{ gmail.secure }}"
-  delegate_to: "{{delegation}}"
-  run_once: True
-  register: emailresult
-  until: emailresult is not failed
-  retries: 3
-  delay: 20
 
 - name: Remove individual body part
   delegate_to: "{{delegation}}"
