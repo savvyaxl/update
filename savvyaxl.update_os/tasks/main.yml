@@ -14,8 +14,7 @@
     state: touch
     path: "{{item}}"
 
-
-- name: Create the start file
+- name: Create the start file (for email)
   shell: "echo {{ inventory_hostname }} >> {{ start_file }}"
   delegate_to: "{{delegation}}"
   become: false
@@ -29,12 +28,12 @@
     update_cache: yes
     update_only: yes
 
-- name: Create the connected file
+- name: Create the connected file (for email)
   shell: "echo {{ inventory_hostname }} >> {{ connected_file }}"
   delegate_to: "{{delegation}}"
   become: false
 
-- name: Create the updated file
+- name: Create the updated file (for email)
   shell: "echo {{ inventory_hostname }} >> {{ updated_file }}"
   delegate_to: "{{delegation}}"
   when: yum_updates.changed
@@ -51,7 +50,7 @@
     - Perform reboot
     - Wait for 200 seconds after the reboot
 
-- name: Create the needsrestart file
+- name: Create the needsrestart file (for email)
   shell: "echo {{ inventory_hostname }} >> {{ needsrestart_file }}"
   delegate_to: "{{delegation}}"
   when: needsrestart.rc == 1

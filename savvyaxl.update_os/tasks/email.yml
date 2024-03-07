@@ -2,7 +2,7 @@
   delegate_to: "{{delegation}}"
   ansible.builtin.template:
     src: body.j2
-    dest: "/tmp/{{inventory_hostname}}.body.html"
+    dest: "/tmp/{{inventory_hostname}}.body.{{random}}.html"
 
 - name: Create the body and add summery file
   run_once: True
@@ -25,7 +25,7 @@
   delegate_to: "{{delegation}}"
   run_once: True
   ansible.builtin.shell: |
-    for x in /tmp/*.body.html
+    for x in /tmp/*.body.{{random}}.html
     do
     cat ${x}  >> {{mail_body_file}}
     done
@@ -53,11 +53,11 @@
     from: "{{ updateAll.from }}"
     subject: Ansible-report for {{start_date.stdout}}
     #body: "{{my_new_fact}}"
-    body: "{{mail_body.stdout}}"
+    body: "{{mail_body.stdout | default(' ') }}"
     #secure: "{{ gmail.secure }}"
 
 - name: Remove individual body part
   delegate_to: "{{delegation}}"
   ansible.builtin.file:
-    path: /tmp/{{inventory_hostname}}.body.html
+    path: "/tmp/{{inventory_hostname}}.body.{{random}}.html"
     state: absent

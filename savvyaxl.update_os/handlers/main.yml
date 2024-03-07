@@ -3,9 +3,9 @@
 - name: Perform reboot
   when: inventory_hostname not in no_restart
   become: true
-  async: 1
-  poll: 0
-  timeout: 10
+  async: 10
+  poll: 5
+  timeout: 200
   ignore_errors: yes
   failed_when: false
   register: rebooted

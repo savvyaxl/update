@@ -3,7 +3,7 @@
 no_restart:
   - node02.nfs.info
   - localhost
-random: tmtghujm
+random: "{{ my_random | default('tmtghujm') }}"
 my_timeout: 200
 mail_body_file: "/tmp/ansible_mailing_{{random}}"
 start_file: "/tmp/ansible_start_{{random}}"
