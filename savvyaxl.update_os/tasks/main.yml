@@ -63,6 +63,10 @@
   command: uptime
   register: uptime
 
+- name: Ping the server to see if it is still alive
+  ignore_errors: yes
+  ansible.builtin.ping:
+
 - name: check to see if we need a reboot the second time
   become: true
   command: needs-restarting -r
