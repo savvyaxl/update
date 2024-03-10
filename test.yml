@@ -1,0 +1,25 @@
+---
+- name: test a fail
+  hosts: "{{ my_hosts | default('localhost')}}"
+  gather_facts: false
+  tasks:
+    - name: test a file that does not exit
+      block:
+        register: bob
+        ignore_errors: true
+        failed_when: true
+        ansible.builtin.shell: |
+          cat /etc/passwda
+      rescue:
+        debug: 
+          msg: it is ok
+
+    - name: it is unreachable
+      when: bob.unreachable is defined
+      ansible.builtin.debug:
+        msg: hahaha not even rechable
+
+    - name: debug
+      ansible.builtin.debug:
+        var: bob
+
