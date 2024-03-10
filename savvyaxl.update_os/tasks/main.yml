@@ -87,7 +87,7 @@
 
 - include_tasks: create_summery.yml
 
-#- include_tasks: email.yml
+- include_tasks: email.yml
 
 - name: Clear the files
   delegate_to: localhost
