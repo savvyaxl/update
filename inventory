@@ -4,6 +4,7 @@ localhostd
 4670k.nfs.info
 node02.nfs.info
 node01.nfs.info
+host02.nfs.info ansible_host=192.168.122.1
 
 [web]
 node01.nfs.info
