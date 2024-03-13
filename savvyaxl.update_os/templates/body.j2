@@ -1,5 +1,0 @@
-<h1>{{ inventory_hostname | default(omit) }}</h1>
-<p><b>{{ uptime.stdout | default(omit) }}</b></p>
-<p>{{ yum_updates.results | default(omit) }}</p>
-<p>{{ needsrestart.stdout_lines[-2:] | default(omit) }}</p>
-
