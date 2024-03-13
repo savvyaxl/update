@@ -1,0 +1,41 @@
+---
+# tasks file for savvyaxl.updade_windows
+- name: Get timestamp from the system
+  shell: "date"
+  register: start_date
+  delegate_to: "{{delegation}}"
+  run_once: true
+  become: false
+
+- name: Create the files
+  delegate_to: localhost
+  run_once: true
+  loop: "{{clear}}"
+  file:
+    state: touch
+    path: "{{item}}"
+
+- name: Create the start file (for email)
+  shell: "echo {{ inventory_hostname }} >> {{ start_file }}"
+  delegate_to: "{{delegation}}"
+  become: false
+
+- name: update
+  become: true
+  become_method: runas
+  become_user: SYSTEM
+  register: win_update
+  ansible.windows.win_updates:
+    category_names: '*'
+    reject_list:
+    - Lenovo - Input - USB Enhanced Performance Keyboard
+    reboot: false
+  ignore_errors: true
+
+- name: debug
+  ansible.builtin.debug:
+    var: win_update
+    
+- include_tasks: create_summery.yml
+
+- include_tasks: email.yml

@@ -1,0 +1,82 @@
+- name: Create the tmp1_file file for connected
+  shell: |
+    (for list in $(cat {{ start_file }} )
+      do
+          if [[ $(grep "${list}" {{ connected_file }} ) ]]
+          then
+              echo "<td>${list}</td>"'<td>Success</td>' >> {{ tmp1_file }}
+          else
+              echo "<td>${list}</td>"'<td>Failed</td>' >> {{ tmp1_file }}
+          fi
+      done
+      )
+  delegate_to: localhost
+  become: false
+  run_once: True
+
+- name: Create the tmp2_file file for updated
+  shell: |
+    (for list in $(cat {{ start_file }} )
+    do
+        if [[ $(grep "${list}" {{ updated_file }} ) ]]
+        then
+            echo "$(grep ${list} {{ tmp1_file }} )"'<td>Updated</td>' >> {{ tmp2_file }}
+        elif [[ ! $(grep "${list}" {{ connected_file }} ) ]]
+        then
+            echo "$(grep ${list} {{ tmp1_file }} )"'<td>Failed</td>' >> {{ tmp2_file }}
+        else
+            echo "$(grep ${list} {{ tmp1_file }} )"'<td>OK</td>' >> {{ tmp2_file }}
+        fi
+    done
+    )
+  delegate_to: localhost
+  become: false
+  run_once: True
+
+- name: Create the tmp2_file file for NeedsReStart
+  shell: |
+    (for list in $(cat {{ start_file }} )
+    do
+        if [[ $(grep "${list}" {{ needsrestart_file }} ) ]]
+        then
+            echo "$(grep ${list} {{ tmp2_file }} )"'<td>Needs Restart</td>' >> {{ tmp3_file }}
+        elif [[ ! $(grep "${list}" {{ connected_file }} ) ]]
+        then
+            echo "$(grep ${list} {{ tmp2_file }} )"'<td>Failed</td>' >> {{ tmp3_file }}
+        else
+            echo "$(grep ${list} {{ tmp2_file }} )"'<td>OK</td>' >> {{ tmp3_file }}
+        fi
+    done
+    )
+  delegate_to: localhost
+  become: false
+  run_once: True
+
+- name: Create the tmp4_file file for Restarted
+  shell: |
+    (echo '<table>' >> {{ tmp4_file }}
+    for list in $(cat {{ start_file }} | sort )
+    do
+        echo '<tr>' >> {{ tmp4_file }}
+        if [[ $(grep "${list}" {{ restared_file }} ) ]]
+        then
+            echo "$(grep ${list} {{ tmp3_file }} )"'<td>Restarted</td>' >> {{ tmp4_file }}
+        elif [[ ! $(grep "${list}" {{ connected_file }} ) ]]
+        then
+            echo "$(grep ${list} {{ tmp3_file }} )"'<td>Failed</td>' >> {{ tmp4_file }}
+        else
+            if [[ ! $(grep "${list}" {{ needsrestart_file }} ) ]]
+            then
+              echo "$(grep ${list} {{ tmp3_file }} )"'<td>OK</td>' >> {{ tmp4_file }}
+            else
+              echo "$(grep ${list} {{ tmp3_file }} )"'<td>Needs Restart</td>' >> {{ tmp4_file }}
+            fi
+        fi
+        echo '</tr>' >> {{ tmp4_file }}
+    done
+    echo '</table>' >> {{ tmp4_file }}
+    )
+  delegate_to: localhost
+  become: false
+  run_once: True
+

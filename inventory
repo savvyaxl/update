@@ -8,3 +8,12 @@ host02.nfs.info ansible_host=192.168.122.1
 
 [web]
 node01.nfs.info
+
+[windows]
+DESKTOP-MU6SIB0
+
+[windows:vars]
+ansible_connection=winrm
+ansible_ssh_port=5986
+ansible_winrm_transport=ntlm
+ansible_winrm_server_cert_validation=validate

@@ -1,0 +1,10 @@
+---
+- name: update windows
+  hosts: windows
+  gather_facts: false
+  tasks:
+    - name: update
+      ansible.windows.win_ping: 
+      become: true
+      become_method: runas
+      become_user: SYSTEM

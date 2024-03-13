@@ -1,0 +1,99 @@
+---
+- name: Get timestamp from the system
+  shell: "date"
+  register: start_date
+  delegate_to: "{{delegation}}"
+  run_once: true
+  become: false
+
+- name: Create the files
+  delegate_to: localhost
+  run_once: true
+  loop: "{{clear}}"
+  file:
+    state: touch
+    path: "{{item}}"
+
+- name: Create the start file (for email)
+  shell: "echo {{ inventory_hostname }} >> {{ start_file }}"
+  delegate_to: "{{delegation}}"
+  become: false
+
+- name: Update all installed packages using YUM module
+  become: true
+  register: yum_updates
+  yum:
+    name: '*'
+    state: latest
+    update_cache: yes
+    update_only: yes
+
+- name: Create the connected file (for email)
+  shell: "echo {{ inventory_hostname }} >> {{ connected_file }}"
+  delegate_to: "{{delegation}}"
+  become: false
+
+- name: Create the updated file (for email)
+  shell: "echo {{ inventory_hostname }} >> {{ updated_file }}"
+  delegate_to: "{{delegation}}"
+  when: yum_updates.changed
+  become: false
+
+- name: check to see if we need a reboot
+  become: true
+  command: needs-restarting -r
+  register: needsrestart
+  changed_when: needsrestart.rc == 1
+  ignore_errors: yes
+  failed_when: false
+  notify:
+    - Perform reboot
+    - Wait for 200 seconds after the reboot
+
+- name: Create the needsrestart file (for email)
+  shell: "echo {{ inventory_hostname }} >> {{ needsrestart_file }}"
+  delegate_to: "{{delegation}}"
+  when: needsrestart.rc == 1
+  become: false
+
+- name: Flush handlers
+  meta: flush_handlers
+
+- name: Get the uptime, verify reboot
+  command: uptime
+  register: uptime
+  ignore_errors: yes
+
+- name: check to see if we need a reboot the second time
+  when: uptime is defined
+  become: true
+  register: needsrestart2
+  ignore_errors: yes
+  ansible.builtin.command: needs-restarting -r
+
+- name: Create the Restarted file
+  shell: "echo {{ inventory_hostname }} >> {{ restared_file }}"
+  delegate_to: "{{delegation}}"
+  when: needsrestart2.rc == 0 and needsrestart.rc == 1
+  become: false
+
+- name: Get timestamp from the system
+  shell: "date"
+  register: end_date
+  delegate_to: "{{delegation}}"
+  run_once: true
+  become: false
+
+
+- include_tasks: create_summery.yml
+
+- include_tasks: email.yml
+
+- name: Clear the files
+  delegate_to: localhost
+  run_once: true
+  loop: "{{clear}}"
+  file:
+    state: absent
+    path: "{{item}}"
+

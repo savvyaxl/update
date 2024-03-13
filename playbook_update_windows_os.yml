@@ -1,0 +1,6 @@
+---
+- name: Update Red Hat and Fedora
+  hosts: "{{ my_win_hosts | default ('windows') }}"
+  
+  roles:
+    - role: savvyaxl.update_windows
