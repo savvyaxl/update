@@ -29,6 +29,3 @@ clear:
   - "{{tmp2_file}}"
   - "{{tmp3_file}}"
   - "{{tmp4_file}}"
-clear1:
-  - "{{tmp4_file}}"
-  - "{{mail_body_file}}"

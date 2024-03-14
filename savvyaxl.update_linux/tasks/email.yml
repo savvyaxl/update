@@ -51,8 +51,3 @@
     body: "{{mail_body.stdout | default(' ') }}"
     #secure: "{{ gmail.secure }}"
 
-- name: Remove individual body part
-  delegate_to: "{{delegation}}"
-  ansible.builtin.file:
-    path: "/tmp/{{inventory_hostname}}.body.{{random}}.html"
-    state: absent

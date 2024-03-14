@@ -32,10 +32,55 @@
     reboot: false
   ignore_errors: true
 
+- name: Create the connected file (for email)
+  shell: "echo {{ inventory_hostname }} >> {{ connected_file }}"
+  delegate_to: "{{delegation}}"
+  become: false
+
+- name: Create the updated file (for email)
+  shell: "echo {{ inventory_hostname }} >> {{ updated_file }}"
+  delegate_to: "{{delegation}}"
+  when: win_update.changed
+  become: false
+
+- name: Create the needsrestart file (for email)
+  shell: "echo {{ inventory_hostname }} >> {{ needsrestart_file }}"
+  delegate_to: "{{delegation}}"
+  when: win_update.reboot_required
+  become: false
+
+- name: Create the Restarted file
+  shell: "echo {{ inventory_hostname }} >> {{ restared_file }}"
+  delegate_to: "{{delegation}}"
+  when: win_update.rebooted
+  become: false
+
 - name: debug
   ansible.builtin.debug:
     var: win_update
-    
+
+
+- name: Get timestamp from the system
+  shell: "date"
+  register: end_date
+  delegate_to: "{{delegation}}"
+  run_once: true
+  become: false
+
 - include_tasks: create_summery.yml
 
 - include_tasks: email.yml
+
+- name: Clear the files
+  delegate_to: localhost
+  run_once: true
+  loop: "{{clear}}"
+  file:
+    state: absent
+    path: "{{item}}"
+
+- name: Remove individual body part
+  delegate_to: "{{delegation}}"
+  ansible.builtin.file:
+    path: "/tmp/{{inventory_hostname}}.body.{{random}}.html"
+    state: absent
