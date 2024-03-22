@@ -1,5 +1,6 @@
 ---
 # defaults file for savvyaxl.updade_windows
+do_reboot: true
 no_restart:
   - node02.nfs.info
   - localhost

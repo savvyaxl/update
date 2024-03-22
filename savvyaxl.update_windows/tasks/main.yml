@@ -49,16 +49,21 @@
   when: win_update.reboot_required
   become: false
 
-- name: Create the Restarted file
-  shell: "echo {{ inventory_hostname }} >> {{ restared_file }}"
-  delegate_to: "{{delegation}}"
-  when: win_update.rebooted
-  become: false
-
 - name: debug
   ansible.builtin.debug:
     var: win_update
 
+- name: Reboot the machine with all defaults
+  register: win_reboot
+  when: do_reboot and win_update.reboot_required
+  ansible.windows.win_reboot:
+
+- name: Create the Restarted file
+  ignore_errors: true
+  shell: "echo {{ inventory_hostname }} >> {{ restared_file }}"
+  delegate_to: "{{delegation}}"
+  when: win_reboot.rebooted | default(false)
+  become: false
 
 - name: Get timestamp from the system
   shell: "date"
