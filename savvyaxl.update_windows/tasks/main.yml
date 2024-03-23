@@ -44,7 +44,7 @@
   when: win_update.reboot_required
   become: false
 
-- name: set a fact
+- name: Initialize rebooted
   ansible.builtin.set_fact:
     win_reboot:
       rebooted: false
