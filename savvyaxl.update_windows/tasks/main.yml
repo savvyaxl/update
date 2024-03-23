@@ -44,10 +44,6 @@
   when: win_update.reboot_required
   become: false
 
-- name: debug
-  ansible.builtin.debug:
-    var: win_update
-
 - name: set a fact
   ansible.builtin.set_fact:
     win_reboot:
