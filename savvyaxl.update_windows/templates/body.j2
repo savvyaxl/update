@@ -1,5 +1,12 @@
 <h1>{{ inventory_hostname | default(' ') }}</h1>
-<p><b>{{ uptime.stdout | default(' ') }}</b></p>
-<p>{{ win_update.updates | default(' ') }}</p>
-<p>{{ needsrestart.stdout_lines[-2:] | default(' ') }}</p>
+<p><b>{{ uptime | default(' ') }}</b></p>
+<pre>
+<% for update in win_update.updates.values() %>
+<% if update.installed %>
+Installed: {{update.title}}
+<% else %>
+Pending install: {{update.title}}
+<% endif %>
+<% endfor %>
+</pre>
 

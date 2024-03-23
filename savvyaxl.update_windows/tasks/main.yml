@@ -61,6 +61,15 @@
   when: win_reboot.rebooted | default(false)
   become: false
 
+- name: Windows up time
+  register: uptime
+  ansible.windows.win_powershell:
+    script: |
+      $current = (Get-CimInstance -ClassName Win32_OperatingSystem -Property LastBootUpTime).LastBootUpTime
+      $end= Get-Date
+      $diff= New-TimeSpan -Start $current -End $end
+      Write-Output "Uptime: $diff"
+
 - name: Get timestamp from the system
   shell: "date"
   register: end_date
