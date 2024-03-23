@@ -7,13 +7,8 @@
   run_once: true
   become: false
 
-- name: Create the files
-  delegate_to: localhost
-  run_once: true
-  loop: "{{clear}}"
-  file:
-    state: touch
-    path: "{{item}}"
+- include_tasks: 2_Delete.yml
+- include_tasks: 1_Create.yml
 
 - name: Create the start file (for email)
   shell: "echo {{ inventory_hostname }} >> {{ start_file }}"
@@ -77,20 +72,12 @@
   run_once: true
   become: false
 
-- include_tasks: create_summery.yml
-
-- include_tasks: email.yml
-
-- name: Clear the files
-  delegate_to: localhost
-  run_once: true
-  loop: "{{clear}}"
-  file:
-    state: absent
-    path: "{{item}}"
-
-- name: Remove individual body part
+- name: Use j2 template to create individual body part
   delegate_to: "{{delegation}}"
-  ansible.builtin.file:
-    path: "/tmp/{{inventory_hostname}}.body.{{random}}.html"
-    state: absent
+  ansible.builtin.template:
+    src: body.j2
+    dest: "/tmp/{{inventory_hostname}}.body.{{random}}.html"
+
+- include_tasks: create_summery.yml
+- include_tasks: email.yml
+- include_tasks: 2_Delete.yml

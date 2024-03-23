@@ -1,4 +1,7 @@
 - name: Create the tmp1_file file for connected
+  delegate_to: localhost
+  become: false
+  run_once: True
   shell: |
     (for list in $(cat {{ start_file }} )
       do
@@ -10,11 +13,11 @@
           fi
       done
       )
-  delegate_to: localhost
-  become: false
-  run_once: True
 
 - name: Create the tmp2_file file for updated
+  delegate_to: localhost
+  become: false
+  run_once: True  
   shell: |
     (for list in $(cat {{ start_file }} )
     do
@@ -29,11 +32,11 @@
         fi
     done
     )
+
+- name: Create the tmp2_file file for NeedsReStart
   delegate_to: localhost
   become: false
   run_once: True
-
-- name: Create the tmp2_file file for NeedsReStart
   shell: |
     (for list in $(cat {{ start_file }} )
     do
@@ -48,11 +51,11 @@
         fi
     done
     )
+
+- name: Create the tmp4_file file for Restarted
   delegate_to: localhost
   become: false
   run_once: True
-
-- name: Create the tmp4_file file for Restarted
   shell: |
     (echo '<table>' >> {{ tmp4_file }}
     for list in $(cat {{ start_file }} | sort )
@@ -76,7 +79,4 @@
     done
     echo '</table>' >> {{ tmp4_file }}
     )
-  delegate_to: localhost
-  become: false
-  run_once: True
 

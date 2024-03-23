@@ -4,20 +4,12 @@
   become: false
   remote_user: ansible
   gather_facts: false
-  order: sorted
-  
+  order: sorted  
   roles:
     - role: savvyaxl.update_linux
       when: true
 
 - name: Update Windows
-  hosts: "{{ my_win_hosts | default ('windows') }}"
-  
+  hosts: "{{ my_win_hosts | default ('windows') }}" 
   roles:
     - role: savvyaxl.update_windows
-
-- name: Update Windows
-  hosts: "{{ all_update | default ('localhost') }}"
-  
-  roles:
-    - role: savvyaxl.email

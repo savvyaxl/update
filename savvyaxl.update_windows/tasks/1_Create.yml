@@ -1,0 +1,8 @@
+- name: Create the files
+  delegate_to: localhost
+  run_once: true
+  loop: "{{clear}}"
+  ansible.builtin.file:
+    state: touch
+    path: "{{item}}"
+
