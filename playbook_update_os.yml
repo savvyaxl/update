@@ -7,9 +7,10 @@
   order: sorted  
   roles:
     - role: savvyaxl.update_linux
-      when: false
+      when: true
 
 - name: Update Windows
   hosts: "{{ my_win_hosts | default ('windows') }}" 
   roles:
     - role: savvyaxl.update_windows
+      when: true

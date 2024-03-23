@@ -77,6 +77,10 @@
   run_once: true
   become: false
 
+- name: Debug
+  ansible.builtin.debug:
+    var: win_update
+
 - name: Use j2 template to create individual body part
   delegate_to: "{{delegation}}"
   ansible.builtin.template:
