@@ -1,0 +1,13 @@
+- name: Clear the files
+  delegate_to: localhost
+  run_once: true
+  loop: "{{clear}}"
+  file:
+    state: absent
+    path: "{{item}}"
+
+- name: Remove individual body part
+  delegate_to: "{{delegation}}"
+  ansible.builtin.file:
+    path: "/tmp/{{inventory_hostname}}.body.{{random}}.html"
+    state: absent
