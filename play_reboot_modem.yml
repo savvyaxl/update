@@ -1,0 +1,6 @@
+---
+- name: Reboot the Modem
+  hosts: localhost
+  tasks:
+    - name: Reboot
+      ansible.builtin.script: ./cmcc_reboot.py
