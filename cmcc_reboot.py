@@ -15,7 +15,7 @@ import base64
 import requests
 import pickle
 
-reboot_me = False
+reboot_me = True
 HOST='192.168.0.1'
 PROT='https'
 GATEWAY_URL = PROT + '://' + HOST + '/'
@@ -41,7 +41,7 @@ COOKIE_DEFAULT = {'Cookie': 'body:Language:english:id=1'}
 #####    pickle.dump([u,p], f)
 
 # Getting back the objects:
-with open('cmcc_reboot_vars', 'rb') as f:
+with open('/home/ansible/ansible/cmcc_reboot_vars', 'rb') as f:
     _user, _pass = pickle.load(f)
 
 ADMIN_USER = _user

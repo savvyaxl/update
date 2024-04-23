@@ -1,3 +1,5 @@
 vars 
 inventory
 cmcc_reboot_vars
+register.yml
+count

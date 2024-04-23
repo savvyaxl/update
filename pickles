@@ -1,0 +1,7 @@
+import pickle
+u = 'admin'
+p = '79B5D8275014'
+
+# Saving the objects:
+with open('cmcc_reboot_vars', 'wb') as f:
+   pickle.dump([u,p], f)

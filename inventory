@@ -2,6 +2,7 @@
 
 [update]
 4670k.nfs.info
+node03.nfs.info
 node02.nfs.info
 node01.nfs.info
 host02.nfs.info ansible_host=192.168.122.1
@@ -21,3 +22,6 @@ ansible_winrm_server_cert_validation=validate
 [all_update:children]
 update
 windows
+
+[register]
+node03.nfs.info
