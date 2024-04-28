@@ -6,6 +6,7 @@ node03.nfs.info
 node02.nfs.info
 node01.nfs.info
 host02.nfs.info ansible_host=192.168.122.1
+mushimushi2.brazilsouth.cloudapp.azure.com ansible_user=azureuser
 
 [web]
 node01.nfs.info
