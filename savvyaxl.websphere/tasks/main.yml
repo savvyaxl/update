@@ -1,0 +1,12 @@
+---
+# tasks file for savvyaxl.websphere
+#
+- name: create response file
+  ansible.builtin.template:
+    src: response.j2
+    dest: "/tmp/response"
+
+- name: create JVM
+  ansible.builtin.shell: |
+    /opt/IBM/WebSphere/AppServer/bin/manageprofiles.sh \
+    -response /tmp/response

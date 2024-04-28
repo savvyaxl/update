@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<agent-input>
+<variables>
+<variable name='sharedLocation' value='{{sharedLocation}}'/>
+<variable name='wasVersion' value='{{wasVersion}}'/>
+<variable name='javaVersion' value='{{javaVersion}}'/>
+<variable name='home' value='{{home}}'/>
+</variables>
+<server>
+<repository location='{{location=}'/>
+</server>
+<profile id='IBM HTTP Server V9.0' installLocation='/${home}/IBM/HTTPServer'>
+<data key='cic.selector.arch' value='x86_64'/>
+<data key='user.wasjava' value='java8'/>
+<data key='user.ihs.http.server.service.name' value='none'/>
+<data key='user.ihs.httpPort' value='80'/>
+<data key='user.ihs.installHttpService' value='false'/>
+<data key='user.internal.use.only.prev.wasjava' value='java8'/>
+<data key='user.ihs.allowNonRootSilentInstall' value='true'/>
+</profile>
+<install>
+<!-- IBM HTTP Server para WebSphere Application Server -->
+<offering profile='IBM HTTP Server V9.0' id='com.ibm.websphere.IHS.v90' version='${wasVersion}' features='core.feature'/>
+<!-- IBM SDK, Java Technology Edition -->
+<offering profile='IBM HTTP Server V9.0' id='com.ibm.java.jdk.v8' version='${javaVersion}' features='com.ibm.sdk.8'/>
+</install>
+<profile id='IBM WebSphere Application Server V9.0' installLocation='/${home}/IBM/WebSphere/AppServer'>
+<data key='cic.selector.arch' value='x86_64'/>
+</profile>
+<install>
+<!-- IBM WebSphere Application Server -->
+<offering profile='IBM WebSphere Application Server V9.0' id='com.ibm.websphere.BASE.v90' version='${wasVersion}' features='core.feature,ejbdeploy,thinclient,embeddablecontainer'/>
+<!-- IBM SDK, Java Technology Edition -->
+<offering profile='IBM WebSphere Application Server V9.0' id='com.ibm.java.jdk.v8' version='${javaVersion}' features='com.ibm.sdk.8'/>
+</install>
+<profile id='Web Server Plug-ins for IBM WebSphere Application Server V9.0' installLocation='/${home}/IBM/WebSphere/Plugins'>
+<data key='cic.selector.arch' value='x86_64'/>
+</profile>
+<install>
+<!-- Web Server Plug-ins para IBM WebSphere Application Server -->
+<offering profile='Web Server Plug-ins for IBM WebSphere Application Server V9.0' id='com.ibm.websphere.PLG.v90' version='${wasVersion}' features='core.feature'/>
+<!-- IBM SDK, Java Technology Edition -->
+<offering profile='Web Server Plug-ins for IBM WebSphere Application Server V9.0' id='com.ibm.java.jdk.v8' version='${javaVersion}' features='com.ibm.sdk.8'/>
+</install>
+<preference name='com.ibm.cic.common.core.preferences.eclipseCache' value='${sharedLocation}'/>
+<preference name='com.ibm.cic.common.core.preferences.ssl.nonsecureMode' value='True'/>
+</agent-input>
+

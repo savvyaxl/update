@@ -1,0 +1,12 @@
+---
+- name: Update Red Hat and Fedora
+  hosts: "{{ my_hosts | default ('websphere') }}"
+  become: true
+  remote_user: azureuser
+  gather_facts: false
+  order: sorted  
+
+  roles:
+    - role: savvyaxl.websphere
+      when: true
+

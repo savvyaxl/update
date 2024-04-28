@@ -1,0 +1,10 @@
+---
+# defaults file for savvyaxl.websphere
+sharedLocation: '/opt/IBM/Shared'
+wasVersion: '9.0.5016.20230609_0954'
+javaVersion: '8.0.8021.20240318_0922'
+home: 'opt'
+location: 'https://repos.savvyaxl.com.br:6235/wasrepo/'
+profileName: wasnode
+nodeName: websphere
+hostName: myvm
