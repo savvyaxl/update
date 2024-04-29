@@ -17,3 +17,7 @@
     dest: "{{dir}}"
     remote_src: yes
 
+- name: install agent
+  ansible.builtin.shell: |
+    "{{dir}}/installc -acceptLicense"
+
