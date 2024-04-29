@@ -3,7 +3,14 @@
     src: install_websphere.j2
     dest: "{{install_file}}"
 
+- name: check if websphere is already installed
+  ignore_errors: true
+  register: websphere_installed
+  ansible.builtin.shell: |
+    /opt/IBM/InstallationManager/eclipse/tools/imcl
+
 - name: Install WebSphere
+  when: websphere_installed.rc != 0 
   ansible.builtin.shell: |
    /opt/IBM/InstallationManager/eclipse/tools/imcl -acceptLicense \
    input "{{install_file}}" \
