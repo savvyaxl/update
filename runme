@@ -1,0 +1,2 @@
+cd ~/ansible; ansible-playbook --vault-password-file=../.vault playbook_websphere.yml -e my_hosts=mushimushi2.brazilsouth.cloudapp.azure.com
+

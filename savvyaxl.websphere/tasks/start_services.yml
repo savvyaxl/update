@@ -1,0 +1,10 @@
+- name: Stop ihs
+  ignore_errors: yes
+  ansible.builtin.shell: |
+    /opt/IBM/HTTPServer/bin/apachectl stop
+
+- name: Stop was
+  ignore_errors: yes
+  ansible.builtin.shell: |
+    /opt/IBM/WebSphere/AppServer/bin/startServer.sh server1
+
