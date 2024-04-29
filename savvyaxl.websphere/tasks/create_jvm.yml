@@ -4,6 +4,7 @@
     dest: "/tmp/response"
 
 - name: create JVM
+  ignore_errors: true
   ansible.builtin.shell: |
     /opt/IBM/WebSphere/AppServer/bin/manageprofiles.sh \
     -response /tmp/response

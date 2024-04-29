@@ -2,4 +2,6 @@
 # tasks file for savvyaxl.websphere
 #
 - include_tasks: install_agent.yml
+- include_tasks: stop_services.yml
+- include_tasks: install_websphre.yml
 - include_tasks: create_jvm.yml

@@ -1,0 +1,11 @@
+- name: create the install response
+  ansible.builtin.template:
+    src: install_websphere.j2
+    dest: "{{install_file}}"
+
+- name: Install WebSphere
+  ansible.builtin.shell: |
+   /opt/IBM/InstallationManager/eclipse/tools/imcl -acceptLicense \
+   input "{{install_file}}" \
+   -log /root/install_log$(date +%s).xml
+

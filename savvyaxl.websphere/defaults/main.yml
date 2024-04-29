@@ -10,7 +10,11 @@ nodeName: websphere
 hostName: myvm
 repo: "https://repos.savvyaxl.com.br:6235/wasrepo"
 agent_name: "agent.installer.linux.gtk.x86_64_1.9.2008.20240227_0018.zip"
+install_name: install.xml
+create_name: response
 dir: "/tmp/agent"
 agent_url: "{{repo}}/{{agent_name}}"
 agent_dest: "{{dir}}/{{agent_name}}"
+install_file: "{{dir}}/{{install_name}}"
+response_file: "{{dir}}/{{create_name}}"
 
