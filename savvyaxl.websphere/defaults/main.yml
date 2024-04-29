@@ -8,3 +8,9 @@ location: 'https://repos.savvyaxl.com.br:6235/wasrepo/'
 profileName: wasnode
 nodeName: websphere
 hostName: myvm
+repo: "https://repos.savvyaxl.com.br:6235/wasrepo"
+agent_name: "agent.installer.linux.gtk.x86_64_1.9.2008.20240227_0018.zip"
+dir: "/tmp/agent"
+agent_url: "{{repo}}/{{agent_name}}"
+agent_dest: "{{dir}}/{{agent_name}}"
+
