@@ -1,4 +1,36 @@
 ---
+- name: create temp directory
+  hosts: localhost
+  become: false
+  gather_facts: false
+  pre_tasks:
+    - name: create
+      register: temp_email_dir
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: _email
+
+    - name: clear path
+      file:
+        path: /tmp/path
+        state: absent
+
+    - name: save the path to a file
+      lineinfile:
+        path: "/tmp/path"
+        create: true
+        line: "{{temp_email_dir.path}}"
+
+    - name: get the start time
+      register: time_start
+      shell: date
+
+    - name: write start time to file
+      lineinfile:
+        line: "{{time_start.stdout}}"
+        path: "{{temp_email_dir.path}}/time_start"
+        create: true
+
 - name: update windows
   ansible.builtin.import_playbook: update_windows.yml
 

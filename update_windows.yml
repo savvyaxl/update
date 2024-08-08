@@ -1,7 +1,19 @@
 ---
 - name: Update Windows
   hosts: "{{ my_win_hosts | default ('windows') }}"
+  gather_facts: false
   serial: 1
+
+  pre_tasks:
+    - name: get path
+      register: temp_email_dir
+      delegate_to: localhost
+      shell: cat /tmp/path
+
+    - name: debug
+      debug:
+        var: temp_email_dir.stdout
+
   roles:
     - role: savvyaxl.update_windows
 
