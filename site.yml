@@ -1,0 +1,6 @@
+---
+- name: update windows
+  ansible.builtin.import_playbook: update_windows.yml
+
+- name: update linux
+  ansible.builtin.import_playbook: update_linux.yml

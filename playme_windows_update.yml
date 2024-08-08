@@ -1,15 +1,24 @@
 ---
 - name: update windows
   hosts: windows
+  serial: 1
   gather_facts: false
+  vars_files:
+    - savvyaxl.update_windows/vars/main.yml
   tasks:
-    - name: update
+    - name: Microsoft Defender Antivirus
       become: true
       become_method: runas
       become_user: SYSTEM
+      register: update_var
       ansible.windows.win_updates:
         category_names: '*'
-        reject_list:
-        - Lenovo - Input - USB Enhanced Performance Keyboard
+        accept_list:
+        - Microsoft Defender Antivirus
         reboot: false
-      failed_when: false
+        state: installed
+        #failed_when: false
+        #
+    - name: debug
+      ansible.builtin.debug:
+        var: update_var

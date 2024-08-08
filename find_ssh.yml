@@ -1,0 +1,24 @@
+---
+- hosts: all
+  become: false
+  gather_facts: false
+
+  vars:
+    ssh_ok:
+      - 8.7p1-38.el9_4.4.x86_64
+
+  tasks:
+    - name: find ssh
+      register: ssh
+      ansible.builtin.shell: |
+        rpm -aq | grep openssh-server | awk -F'-' '{print $3,$4}' | tr ' ' '-'
+
+    - name: compare
+      ansible.builtin.debug:
+        msg: |
+          {% if ssh.stdout in ssh_ok %}
+          OK {{ssh.stdout}}
+          {% else %}
+          NOK {{ssh.stdout}}
+          {% endif %}
+ 
