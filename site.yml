@@ -31,8 +31,17 @@
         path: "{{temp_email_dir.path}}/time_start"
         create: true
 
+  post_tasks:
+    - name: delete files
+      when: temp_email_dir.path is defined
+      file:
+        path: "{{temp_email_dir.path}}"
+        state: absent
+
 - name: update windows
   ansible.builtin.import_playbook: update_windows.yml
 
 - name: update linux
   ansible.builtin.import_playbook: update_linux.yml
+
+
