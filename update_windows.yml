@@ -8,10 +8,14 @@
     temp_file: "{{temp_dir}}/file"
 
   pre_tasks:
+    - name: get the start time
+      register: time_start_windows
+      shell: date
+
     - name: write role start time to file
       run_once: true
       ansible.builtin.lineinfile:
-        line: "time_start_windows: {{time_start.stdout}}"
+        line: "time_start_windows: {{time_start_windows.stdout}}"
         path: "{{temp_file}}"
         create: true
 
@@ -22,16 +26,19 @@
         line: "{{inventory_hostname}}"
 
   post_tasks:
+    - name: get the end time
+      register: time_end_windows
+      shell: date
+
     - name: write end time to file
       delegate_to: localhost
       run_once: true
       ansible.builtin.lineinfile:
-        line: "time_end_windows: {{time_end.stdout}}"
+        line: "time_end_windows: {{time_end_windows.stdout}}"
         path: "{{temp_file}}"
 
     - name: Use j2 template to create individual body part
       delegate_to: localhost
-      delegate_to: "{{delegation}}"
       ansible.builtin.template:
         src: body.j2
         dest: "/temp_dir/body.{{inventory_hostname}}.html"
