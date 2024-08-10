@@ -54,6 +54,6 @@
   ansible.builtin.import_playbook: update_linux.yml
 
 - name: send email
-  ansible.builtin.import_playbook: update_linux.yml
+  ansible.builtin.import_playbook: update_email.yml
 
 
