@@ -43,7 +43,7 @@
     - name: Use j2 template to create individual body part
       delegate_to: localhost
       ansible.builtin.template:
-        src: body.j2
+        src: savvyaxl.update_windows/templates/body.j2
         dest: "/{{temp_file}}/body.{{inventory_hostname}}.html"
 
   roles:
