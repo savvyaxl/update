@@ -3,45 +3,52 @@
   hosts: localhost
   become: false
   gather_facts: false
+  vars:
+    temp_dir: /tmp/hsuteo_email
+    temp_file: "{{temp_dir}}/file"
+
   pre_tasks:
-    - name: create
-      register: temp_email_dir
-      ansible.builtin.tempfile:
+    - name: create directory
+      ansible.builtin.file:
+        path: "{{temp_dir}}"
         state: directory
-        suffix: _email
-
-    - name: clear path
-      file:
-        path: /tmp/path
-        state: absent
-
-    - name: save the path to a file
-      lineinfile:
-        path: "/tmp/path"
-        create: true
-        line: "{{temp_email_dir.path}}"
 
     - name: get the start time
       register: time_start
       shell: date
 
     - name: write start time to file
-      lineinfile:
-        line: "{{time_start.stdout}}"
-        path: "{{temp_email_dir.path}}/time_start"
+      ansible.builtin.lineinfile:
+        line: "time_start: {{time_start.stdout}}"
+        path: "{{temp_file}}"
         create: true
 
-  post_tasks:
-    - name: delete files
-      when: temp_email_dir.path is defined
-      file:
-        path: "{{temp_email_dir.path}}"
-        state: absent
+  # post_tasks:
+  #   - name: get the end time
+  #     register: time_end
+  #     shell: date
+
+  #   - name: write end time to file
+  #     ansible.builtin.lineinfile:
+  #       line: "time_end: {{time_end.stdout}}"
+  #       path: "{{temp_file}}"
+  #       create: true
+
+  #   - name: email the results
+
+  #   - name: delete files
+  #     when: temp_dir is defined
+  #     file:
+  #       path: "{{temp_dir}}"
+  #       state: absent
 
 - name: update windows
   ansible.builtin.import_playbook: update_windows.yml
 
 - name: update linux
+  ansible.builtin.import_playbook: update_linux.yml
+
+- name: send email
   ansible.builtin.import_playbook: update_linux.yml
 
 
