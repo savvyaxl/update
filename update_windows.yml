@@ -44,7 +44,7 @@
       delegate_to: localhost
       ansible.builtin.template:
         src: savvyaxl.update_windows/templates/body.j2
-        dest: "/{{temp_file}}/body.{{inventory_hostname}}.html"
+        dest: "/{{temp_dir}}/body.{{inventory_hostname}}.html"
 
   roles:
     - role: savvyaxl.update_windows
