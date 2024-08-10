@@ -1,19 +1,19 @@
 ---
 # tasks file for savvyaxl.updade_windows
-- name: Get timestamp from the system
-  shell: "date"
-  register: start_date
-  delegate_to: "{{delegation}}"
-  run_once: true
-  become: false
+# - name: Get timestamp from the system
+#   shell: "date"
+#   register: start_date
+#   delegate_to: "{{delegation}}"
+#   run_once: true
+#   become: false
 
-- include_tasks: 2_Delete.yml
-- include_tasks: 1_Create.yml
+# - include_tasks: 2_Delete.yml
+# - include_tasks: 1_Create.yml
 
-- name: Create the start file (for email)
-  shell: "echo {{ inventory_hostname }} >> {{ start_file }}"
-  delegate_to: "{{delegation}}"
-  become: false
+# - name: Create the start file (for email)
+#   shell: "echo {{ inventory_hostname }} >> {{ start_file }}"
+#   delegate_to: "{{delegation}}"
+#   become: false
 
 - name: update
   become: true
