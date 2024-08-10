@@ -9,13 +9,15 @@
 
   pre_tasks:
     - name: get the start time
+      delegate_to: localhost
       register: time_start_windows
       shell: date
 
     - name: write role start time to file
       run_once: true
+      delegate_to: localhost
       ansible.builtin.lineinfile:
-        line: "time_start_windows: {{time_start_windows.stdout}}"
+        line: "time_start_windows: \"{{time_start_windows.stdout}}\""
         path: "{{temp_file}}"
         create: true
 
@@ -27,6 +29,7 @@
 
   post_tasks:
     - name: get the end time
+      delegate_to: localhost
       register: time_end_windows
       shell: date
 
@@ -34,7 +37,7 @@
       delegate_to: localhost
       run_once: true
       ansible.builtin.lineinfile:
-        line: "time_end_windows: {{time_end_windows.stdout}}"
+        line: "time_end_windows: \"{{time_end_windows.stdout}}\""
         path: "{{temp_file}}"
 
     - name: Use j2 template to create individual body part
