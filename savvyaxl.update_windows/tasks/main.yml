@@ -88,5 +88,5 @@
     dest: "/tmp/{{inventory_hostname}}.body.{{random}}.html"
 
 - include_tasks: create_summery.yml
-- include_tasks: email.yml
+#- include_tasks: email.yml
 - include_tasks: 2_Delete.yml
