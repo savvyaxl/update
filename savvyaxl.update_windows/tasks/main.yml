@@ -27,39 +27,39 @@
     reboot: false
   ignore_errors: true
 
-- name: Create the connected file (for email)
-  shell: "echo {{ inventory_hostname }} >> {{ connected_file }}"
-  delegate_to: "{{delegation}}"
-  become: false
+# - name: Create the connected file (for email)
+#   shell: "echo {{ inventory_hostname }} >> {{ connected_file }}"
+#   delegate_to: "{{delegation}}"
+#   become: false
 
-- name: Create the updated file (for email)
-  shell: "echo {{ inventory_hostname }} >> {{ updated_file }}"
-  delegate_to: "{{delegation}}"
-  when: win_update.changed
-  become: false
+# - name: Create the updated file (for email)
+#   shell: "echo {{ inventory_hostname }} >> {{ updated_file }}"
+#   delegate_to: "{{delegation}}"
+#   when: win_update.changed
+#   become: false
 
-- name: Create the needsrestart file (for email)
-  shell: "echo {{ inventory_hostname }} >> {{ needsrestart_file }}"
-  delegate_to: "{{delegation}}"
-  when: win_update.reboot_required
-  become: false
+# - name: Create the needsrestart file (for email)
+#   shell: "echo {{ inventory_hostname }} >> {{ needsrestart_file }}"
+#   delegate_to: "{{delegation}}"
+#   when: win_update.reboot_required
+#   become: false
 
 - name: Initialize rebooted
   ansible.builtin.set_fact:
     win_reboot:
-      rebooted: true
+      rebooted: false
 
 - name: Reboot the machine with all defaults
   register: win_reboot
   when: do_reboot and win_update.reboot_required
   ansible.windows.win_reboot:
 
-- name: Create the Restarted file
-  ignore_errors: true
-  shell: "echo {{ inventory_hostname }} >> {{ restared_file }}"
-  delegate_to: "{{delegation}}"
-  when: win_reboot.rebooted | default(false)
-  become: false
+# - name: Create the Restarted file
+#   ignore_errors: true
+#   shell: "echo {{ inventory_hostname }} >> {{ restared_file }}"
+#   delegate_to: "{{delegation}}"
+#   when: win_reboot.rebooted | default(false)
+#   become: false
 
 - name: Windows up time
   register: uptime
@@ -70,23 +70,23 @@
       $diff= New-TimeSpan -Start $current -End $end
       Write-Output "Uptime: $diff"
 
-- name: Get timestamp from the system
-  shell: "date"
-  register: end_date
-  delegate_to: "{{delegation}}"
-  run_once: true
-  become: false
+# - name: Get timestamp from the system
+#   shell: "date"
+#   register: end_date
+#   delegate_to: "{{delegation}}"
+#   run_once: true
+#   become: false
 
 - name: Debug
   ansible.builtin.debug:
     var: win_update
 
-- name: Use j2 template to create individual body part
-  delegate_to: "{{delegation}}"
-  ansible.builtin.template:
-    src: body.j2
-    dest: "/tmp/{{inventory_hostname}}.body.{{random}}.html"
+# - name: Use j2 template to create individual body part
+#   delegate_to: "{{delegation}}"
+#   ansible.builtin.template:
+#     src: body.j2
+#     dest: "/tmp/{{inventory_hostname}}.body.{{random}}.html"
 
-- include_tasks: create_summery.yml
+#- include_tasks: create_summery.yml
 #- include_tasks: email.yml
-- include_tasks: 2_Delete.yml
+#- include_tasks: 2_Delete.yml

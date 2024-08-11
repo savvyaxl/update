@@ -19,9 +19,9 @@
         Rebooted
     {% else %}
         {% if win_reboot.reboot_required | default(false) %}
-            OK
-        {% else %}
             Reboot Required
+        {% else %}
+            OK
         {% endif %}
     {% endif %}
     </tr>
