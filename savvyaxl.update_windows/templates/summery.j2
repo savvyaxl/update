@@ -1,6 +1,28 @@
 <td>
     <tr> <b>{{ inventory_hostname | default(' ') }}</b>         </tr>
-    <tr> {{ win_update.changed | default('a') }}                </tr>
-    <tr> {{ win_update.reboot_required | default('b')  }}       </tr>
-    <tr> {{ win_reboot.rebooted | default('c')  }}              </tr>
+    <tr>             
+    {% if win_reboot.changed %}
+        Updated
+    {% else %}
+        OK
+    {% endif %}
+    </tr>
+    <tr>
+    {% if win_reboot.reboot_required %}
+        Reboot Required
+    {% else %}
+        OK
+    {% endif %}
+    </tr>
+    <tr> 
+    {% if win_reboot.rebooted %}
+        Rebooted
+    {% else %}
+        {% if win_reboot.reboot_required %}
+            OK
+        {% else %}
+            Reboot Required
+        {% endif %}
+    {% endif %}
+    </tr>
 <td>
