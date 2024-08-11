@@ -5,13 +5,14 @@
   vars:
     temp_dir: /tmp/hsuteo_email
     temp_file: "{{temp_dir}}/file"
-    subject_name: Compiled report
+    mail_body_file: "{{temp_dir}}/email_body.html"
+    subject_name: System Update
 
-  pre_tasks:
-    - name: Include vars of stuff.yaml into the 'stuff' variable (2.2).
-      ansible.builtin.include_vars:
-        file: "{{temp_file}}"
-        name: email_stuff
+  #pre_tasks:
+  #  - name: Include vars of stuff.yaml into the 'stuff' variable (2.2).
+  #    ansible.builtin.include_vars:
+  #      file: "{{temp_file}}"
+  #      name: email_stuff
 
   roles:
     - role: savvyaxl.email

@@ -1,13 +1,9 @@
 ---
 - name: summery is a table
-  delegate_to: "{{delegation}}"
-  run_once: True
   ansible.builtin.shell: |
-    echo "<table>" >> {{mail_body_file}}
+    echo "<table>" > {{mail_body_file}}
 
 - name: add the summery runs
-  delegate_to: "{{delegation}}"
-  run_once: True
   ansible.builtin.shell: |
     for x in {{temp_dir}}/summery.*.html
     do
@@ -15,14 +11,10 @@
     done
 
 - name: summery is a table
-  delegate_to: "{{delegation}}"
-  run_once: True
   ansible.builtin.shell: |
     echo "</table>" >> {{mail_body_file}}
 
 - name: add the individual runs
-  delegate_to: "{{delegation}}"
-  run_once: True
   ansible.builtin.shell: |
     for x in {{temp_dir}}/body.*.html
     do
@@ -31,13 +23,9 @@
 
 - name: get the mail body to variable
   register: mail_body
-  delegate_to: "{{delegation}}"
-  run_once: True
   ansible.builtin.command: "cat {{mail_body_file}}"
 
 - name: Sending an e-mail using gmail with app key
-  delegate_to: "{{delegation}}"
-  run_once: True
   register: emailresult
   until: emailresult is not failed
   retries: 3
