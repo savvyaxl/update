@@ -18,6 +18,15 @@
 #     echo "<p>End: {{ end_date.stdout | default(omit) }}</p>" >> {{ mail_body_file }}
 
 
+- name: add the summery runs
+  delegate_to: "{{delegation}}"
+  run_once: True
+  ansible.builtin.shell: |
+    for x in {{temp_dir}}/summery.*.html
+    do
+    cat ${x}  >> {{mail_body_file}}
+    done
+
 - name: add the individual runs
   delegate_to: "{{delegation}}"
   run_once: True
