@@ -1,10 +1,8 @@
 ---
-# - name: Get timestamp from the system
-#   shell: "date"
-#   register: start_date
-#   delegate_to: "{{delegation}}"
-#   run_once: true
-#   become: false
+- name: Get timestamp from the system
+  shell: "date"
+  register: start_date
+  become: false
 
 # - include_tasks: 2_Delete.yml
 # - include_tasks: 1_Create.yml
@@ -75,8 +73,6 @@
 - name: Get timestamp from the system
   shell: "date"
   register: end_date
-  delegate_to: "{{delegation}}"
-  run_once: true
   become: false
 
 # - name: Use j2 template to create individual body part
