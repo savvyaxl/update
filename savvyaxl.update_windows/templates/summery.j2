@@ -1,6 +1,8 @@
 <tr>
-    <td> <b>{{ inventory_hostname | default(' ') }}</b>         </td>
-    <ttdr>             
+    <td> 
+    <b>{{ inventory_hostname | default(' ') }}</b>         
+    </td>
+    <td>             
     {% if win_reboot.changed %}
         Updated
     {% else %}
