@@ -48,7 +48,7 @@
     - name: j2 summery
       delegate_to: localhost
       ansible.builtin.template:
-        src: savvyaxl.update_windows/templates/summery.j2
+        src: savvyaxl.update_linux/templates/summery.j2
         dest: "/{{temp_dir}}/summery.{{inventory_hostname}}.html"
 
   roles:
