@@ -1,3 +1,0 @@
----
-- name: run linux updates
-  ansible.builtin.
