@@ -58,7 +58,7 @@
   ignore_errors: true
   shell: "echo {{ inventory_hostname }} >> {{ restared_file }}"
   delegate_to: "{{delegation}}"
-  when: win_reboot.rebooted | default(false)
+  when: win_reboot.rebooted | default("False")
   become: false
 
 - name: Windows up time
