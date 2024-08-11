@@ -8,41 +8,14 @@
     temp_dir: /tmp/hsuteo_email
     temp_file: "{{temp_dir}}/file"
 
-  # pre_tasks:
-  #   - name: get the start time
-  #     run_once: true
-  #     delegate_to: localhost
-  #     register: time_start_windows
-  #     shell: date
-
-  #   - name: write role start time to file
-  #     run_once: true
-  #     delegate_to: localhost
-  #     ansible.builtin.lineinfile:
-  #       line: "time_start_windows: \"{{time_start_windows.stdout}}\""
-  #       path: "{{temp_file}}"
-  #       create: true
-
-    # - name: write hostname to my vars file
-    #   delegate_to: localhost
-    #   ansible.builtin.lineinfile:
-    #     path: "{{temp_file}}"
-    #     line: "{{inventory_hostname}}"
+  pre_tasks:
+    - name: j2 summery
+      delegate_to: localhost
+      ansible.builtin.template:
+        src: savvyaxl.update_windows/templates/summery_fail.j2
+        dest: "/{{temp_dir}}/summery.{{inventory_hostname}}.html"
 
   post_tasks:
-    # - name: get the end time
-    #   run_once: true
-    #   delegate_to: localhost
-    #   register: time_end_windows
-    #   shell: date
-
-    # - name: write end time to file
-    #   delegate_to: localhost
-    #   run_once: true
-    #   ansible.builtin.lineinfile:
-    #     line: "time_end_windows: \"{{time_end_windows.stdout}}\""
-    #     path: "{{temp_file}}"
-
     - name: Use j2 template to create individual body part
       delegate_to: localhost
       ansible.builtin.template:
