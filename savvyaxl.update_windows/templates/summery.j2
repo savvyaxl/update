@@ -1,1 +1,1 @@
-<b>{{ inventory_hostname | default(' ') }}</b> {{win_update.changed}} 
+<b>{{ inventory_hostname | default(' ') }}</b> {{ win_update.changed | default('a') }} {{ win_update.reboot_required | default('b')  }} {{ win_reboot.rebooted | default('b')  }} 
