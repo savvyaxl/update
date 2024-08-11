@@ -47,7 +47,7 @@
 - name: Initialize rebooted
   ansible.builtin.set_fact:
     win_reboot:
-      rebooted: false
+      rebooted: true
 
 - name: Reboot the machine with all defaults
   register: win_reboot
@@ -58,7 +58,7 @@
   ignore_errors: true
   shell: "echo {{ inventory_hostname }} >> {{ restared_file }}"
   delegate_to: "{{delegation}}"
-  when: win_reboot.rebooted | default("False")
+  when: win_reboot.rebooted | default(false)
   become: false
 
 - name: Windows up time
