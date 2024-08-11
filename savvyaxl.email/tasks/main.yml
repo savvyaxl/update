@@ -48,7 +48,7 @@
     subtype: html
     to: "{{ updateAll.to }}"
     from: "{{ updateAll.from }}"
-    subject: Ansible-report for {{start_date.stdout}}
+    subject: Ansible-report for {{ subject_name  | default("updates") }}
     #body: "{{my_new_fact}}"
     body: "{{mail_body.stdout | default(' ') }}"
     #secure: "{{ gmail.secure }}"
