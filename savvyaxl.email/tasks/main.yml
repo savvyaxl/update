@@ -1,23 +1,4 @@
 ---
-# tasks file for savvyaxl.email
-# I will need the following.
-# j2 template, body.j2
-# tmp4_file that was created by the summary
-# job start and end time
-
-# - name: Create the body and add summery file
-#   run_once: True
-#   delegate_to: "{{delegation}}"
-#   ansible.builtin.shell: cat {{ tmp4_file }} >> {{mail_body_file}}
-
-# - name: Start and End time
-#   delegate_to: "{{delegation}}"
-#   run_once: True
-#   ansible.builtin.shell: |
-#     echo "<p>Start: {{ start_date.stdout | default(omit) }}</p>" >> {{ mail_body_file }}
-#     echo "<p>End: {{ end_date.stdout | default(omit) }}</p>" >> {{ mail_body_file }}
-
-
 - name: add the summery runs
   delegate_to: "{{delegation}}"
   run_once: True
@@ -58,6 +39,5 @@
     to: "{{ updateAll.to }}"
     from: "{{ updateAll.from }}"
     subject: Ansible-report for {{ subject_name  | default("updates") }}
-    #body: "{{my_new_fact}}"
     body: "{{mail_body.stdout | default(' ') }}"
     #secure: "{{ gmail.secure }}"
