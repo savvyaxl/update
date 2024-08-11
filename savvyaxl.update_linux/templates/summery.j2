@@ -1,0 +1,33 @@
+<tr>
+    <td>
+    <b>{{ inventory_hostname | default(' ') }}</b>         
+    </td>
+
+    <td>
+    {% if yum_updates.changed %}
+        Updated
+    {% else %}
+        OK
+    {% endif %}
+    </td>
+
+    <td>
+    {% if needsrestart.rc == 1 %}
+        Reboot Required
+    {% else %}
+        OK
+    {% endif %}
+    </td>
+
+    <td> 
+    {% if needsrestart.rc == 1 %}
+        {% if needsrestart2.rc == 0 %}
+            Rebooted
+        {% else %}
+            Reboot Required
+        {% endif %}
+    {% else %}
+        OK
+    {% endif %}
+    </td>
+</tr>
