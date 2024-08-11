@@ -22,11 +22,11 @@
         path: "{{temp_file}}"
         create: true
 
-    - name: write hostname to my vars file
-      delegate_to: localhost
-      ansible.builtin.lineinfile:
-        path: "{{temp_file}}"
-        line: "{{inventory_hostname}}"
+    # - name: write hostname to my vars file
+    #   delegate_to: localhost
+    #   ansible.builtin.lineinfile:
+    #     path: "{{temp_file}}"
+    #     line: "{{inventory_hostname}}"
 
   post_tasks:
     - name: get the end time

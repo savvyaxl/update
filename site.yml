@@ -24,7 +24,7 @@
 
     - name: write start time to file
       ansible.builtin.lineinfile:
-        line: "time_start_site: {{time_start.stdout}}"
+        line: "time_start_site: \"{{time_start.stdout}}\""
         path: "{{temp_file}}"
         create: true
 
