@@ -24,28 +24,9 @@
 
     - name: write start time to file
       ansible.builtin.lineinfile:
-        line: "time_start_site: \"{{time_start.stdout}}\""
+        line: "<p>Start: {{time_start.stdout}}>/p>"
         path: "{{temp_file}}"
         create: true
-
-  # post_tasks:
-  #   - name: get the end time
-  #     register: time_end
-  #     shell: date
-
-  #   - name: write end time to file
-  #     ansible.builtin.lineinfile:
-  #       line: "time_end: {{time_end.stdout}}"
-  #       path: "{{temp_file}}"
-  #       create: true
-
-  #   - name: email the results
-
-  #   - name: delete files
-  #     when: temp_dir is defined
-  #     file:
-  #       path: "{{temp_dir}}"
-  #       state: absent
 
 - name: update windows
   ansible.builtin.import_playbook: update_windows.yml

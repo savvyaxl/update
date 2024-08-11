@@ -14,6 +14,20 @@
   ansible.builtin.shell: |
     echo "</table>" >> {{mail_body_file}}
 
+- name: summery is a table
+  ansible.builtin.shell: |
+    echo "</table>" >> {{mail_body_file}}
+
+- name: get the end time
+  register: time_end
+  shell: date
+
+- name: Start and End time
+  run_once: True
+  ansible.builtin.shell: |
+    cat {{temp_file}} >> {{ mail_body_file }}
+    echo "<p>End: {{ time_end.stdout | default(omit) }}</p>" >> {{ mail_body_file }}
+
 - name: add the individual runs
   ansible.builtin.shell: |
     for x in {{temp_dir}}/body.*.html

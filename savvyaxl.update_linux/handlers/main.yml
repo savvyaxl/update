@@ -12,7 +12,7 @@
   ansible.builtin.shell: sleep 5 && reboot
 
 - name: Wait for 200 seconds after the reboot
-  delegate_to: "{{delegation}}"
+  delegate_to: localhost
   run_once: true
   ansible.builtin.wait_for:
     timeout: "{{my_timeout}}"
