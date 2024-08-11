@@ -8,17 +8,17 @@
     {% endif %}
     </tr>
     <tr>
-    {% if win_reboot.reboot_required %}
+    {% if win_reboot.reboot_required | default(false) %}
         Reboot Required
     {% else %}
         OK
     {% endif %}
     </tr>
     <tr> 
-    {% if win_reboot.rebooted %}
+    {% if win_reboot.rebooted | default(false) %}
         Rebooted
     {% else %}
-        {% if win_reboot.reboot_required %}
+        {% if win_reboot.reboot_required | default(false) %}
             OK
         {% else %}
             Reboot Required
