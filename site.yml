@@ -29,12 +29,11 @@
         path: "{{temp_file}}"
         create: true
 
-  tasks:
-    - name: update windows
-      ansible.builtin.import_playbook: update_windows.yml
+- name: update windows
+  ansible.builtin.import_playbook: update_windows.yml
 
-    - name: update linux
-      ansible.builtin.import_playbook: update_linux.yml
+- name: update linux
+  ansible.builtin.import_playbook: update_linux.yml
 
-    - name: send email
-      ansible.builtin.import_playbook: update_email.yml
+- name: send email
+  ansible.builtin.import_playbook: update_email.yml
