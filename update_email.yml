@@ -6,7 +6,7 @@
     temp_dir: /tmp/hsuteo_email
     temp_file: "{{temp_dir}}/file"
     mail_body_file: "{{temp_dir}}/email_body.html"
-    subject_name: System Update
+    subject_name: System Update for Linux and Windows
 
   #pre_tasks:
   #  - name: Include vars of stuff.yaml into the 'stuff' variable (2.2).
