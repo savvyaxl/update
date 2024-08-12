@@ -4,7 +4,7 @@
   become: false
   gather_facts: false
   vars:
-    temp_dir: /tmp/hsuteo_email
+    temp_dir: /tmp/hsuteo_email_bob
     temp_file: "{{temp_dir}}/file"
 
   pre_tasks:
@@ -28,13 +28,26 @@
         path: "{{temp_file}}"
         create: true
 
+  post_tasks:
+    - name: delete directory
+      ansible.builtin.file:
+        path: "{{temp_dir}}"
+        state: absent
+
 - name: update windows
   ansible.builtin.import_playbook: update_windows.yml
+  vars:
+    temp_dir: "{{temp_dir}}"
 
 - name: update linux
   ansible.builtin.import_playbook: update_linux.yml
+  vars:
+    temp_dir: "{{temp_dir}}"
 
 - name: send email
   ansible.builtin.import_playbook: update_email.yml
+  vars:
+    temp_dir: "{{temp_dir}}"
+    temp_file: "{{temp_file}}"
 
 
