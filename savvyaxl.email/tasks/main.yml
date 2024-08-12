@@ -20,13 +20,14 @@
 
 - name: get the end time
   register: time_end
-  shell: date
+  shell: |
+    date=$(date)
+    echo "<p>End: $date </p>" >> {{temp_file}}
 
 - name: Start and End time
   run_once: True
   ansible.builtin.shell: |
     cat {{temp_file}} >> {{ mail_body_file }}
-    echo "<p>End: {{ time_end.stdout | default(omit) }}</p>" >> {{ mail_body_file }}
 
 - name: add the individual runs
   ansible.builtin.shell: |
