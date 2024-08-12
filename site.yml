@@ -37,11 +37,3 @@
 
 - name: send email
   ansible.builtin.import_playbook: update_email.yml
-
-
-  post_tasks:
-    - name: delete directory
-      ansible.builtin.file:
-        path: "{{temp_dir}}"
-        state: absent
-
