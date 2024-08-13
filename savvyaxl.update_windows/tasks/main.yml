@@ -2,7 +2,8 @@
 # tasks file for savvyaxl.updade_windows
 - name: Check value for RebootPending
   register: rebootpending
-  ansible.windows.win_powershell: Test-Path 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending'
+  ansible.windows.win_powershell: 
+    script: Test-Path 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending'
   
 - name: Reboot if RebootPending value is True
   when: rebootpending.stdout.find("True") != -1
