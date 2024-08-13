@@ -2,7 +2,7 @@
 - name: Update Windows
   hosts: "{{ my_win_hosts | default ('windows') }}"
   gather_facts: false
-  serial: 1
+  forks: 1
   vars:
     myhosts: windows
     temp_dir: /tmp/hsuteo_email
