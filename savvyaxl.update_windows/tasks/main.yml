@@ -6,7 +6,7 @@
     script: Test-Path 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending'
   
 - name: Reboot if RebootPending value is True
-  when: rebootpending.stdout.find("True") != -1
+  when: rebootpending.output.find("true") != -1
   ansible.windows.win_reboot: 
 
 - name: update
