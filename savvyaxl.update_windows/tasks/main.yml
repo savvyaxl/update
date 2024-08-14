@@ -10,18 +10,16 @@
   ansible.windows.win_reboot: 
 
 - name: update
+  ignore_errors: true
   become: true
   become_method: runas
   become_user: SYSTEM
   register: win_update
   ansible.windows.win_updates:
     category_names: '*'
-    reject_list:
-    - Lenovo - Input - USB Enhanced Performance Keyboard
     reboot: false
-  ignore_errors: true
 
-- name: Initialize rebooted
+- name: Initialize rebooted variable
   ansible.builtin.set_fact:
     win_reboot:
       rebooted: false
