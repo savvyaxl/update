@@ -1,7 +1,7 @@
 192.168.0.1
 
 [update]
-4670k.nfs.info
+#4670k.nfs.info
 #node03.nfs.info
 node02.nfs.info
 node01.nfs.info
@@ -14,6 +14,8 @@ node01.nfs.info
 [windows]
 MY-DC-001
 MY-DC-002
+
+[windows_desktop]
 DESKTOP-2NRMRN3 
 
 [windows:vars]
