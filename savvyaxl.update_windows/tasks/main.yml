@@ -4,10 +4,18 @@
   register: rebootpending
   ansible.windows.win_powershell: 
     script: Test-Path 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending'
-  
+
+- name: Ensure WinRM starts when the system has settled and is ready to work reliably
+  when: rebootpending.output[0]
+  ansible.windows.win_service:
+    name: WinRM
+    start_mode: delayed
+
 - name: Reboot if RebootPending value is True
   when: rebootpending.output[0]
   ansible.windows.win_reboot: 
+    reboot_timeout: 3600
+    post_reboot_delay: 600
 
 - name: update
   ignore_errors: true
@@ -28,6 +36,8 @@
   register: win_reboot
   when: do_reboot and win_update.reboot_required
   ansible.windows.win_reboot:
+    reboot_timeout: 3600
+    post_reboot_delay: 600
 
 - name: Windows up time
   register: uptime
