@@ -26,6 +26,8 @@
   ansible.windows.win_updates:
     category_names: '*'
     reboot: false
+    reject_list:
+    - Lenovo - Input - USB Enhanced Performance Keyboard
 
 - name: Initialize rebooted variable
   ansible.builtin.set_fact:
