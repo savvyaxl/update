@@ -2,7 +2,7 @@
 - name: Update Windows
   hosts: "{{ my_win_hosts | default ('windows') }}"
   gather_facts: false
-  #ignore_unreachable : true
+  ignore_unreachable : true
   serial: 1
   vars:
     myhosts: windows
