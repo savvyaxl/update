@@ -1,0 +1,4 @@
+- name: Get timestamp from the system
+  shell: "date"
+  register: start_date
+  become: false

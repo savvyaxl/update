@@ -1,0 +1,22 @@
+- name: Update all installed packages using YUM module
+  become: true
+  register: yum_updates
+  yum:
+    name: '*'
+    state: latest
+    update_cache: yes
+    update_only: yes
+
+- name: check to see if we need a reboot
+  become: true
+  command: needs-restarting -r
+  register: needsrestart
+  changed_when: needsrestart.rc == 1
+  ignore_errors: yes
+  failed_when: false
+  notify:
+    - Perform reboot
+    - Wait for 200 seconds after the reboot
+
+- name: Flush handlers
+  meta: flush_handlers

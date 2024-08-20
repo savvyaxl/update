@@ -1,45 +1,5 @@
 ---
-- name: Get timestamp from the system
-  shell: "date"
-  register: start_date
-  become: false
-
-- name: Update all installed packages using YUM module
-  become: true
-  register: yum_updates
-  yum:
-    name: '*'
-    state: latest
-    update_cache: yes
-    update_only: yes
-
-- name: check to see if we need a reboot
-  become: true
-  command: needs-restarting -r
-  register: needsrestart
-  changed_when: needsrestart.rc == 1
-  ignore_errors: yes
-  failed_when: false
-  notify:
-    - Perform reboot
-    - Wait for 200 seconds after the reboot
-
-- name: Flush handlers
-  meta: flush_handlers
-
-- name: Get the uptime, verify reboot
-  command: uptime
-  register: uptime
-  ignore_errors: yes
-
-- name: check to see if we need a reboot the second time
-  when: uptime is defined and needsrestart.rc == 1
-  become: true
-  register: needsrestart2
-  ignore_errors: yes
-  ansible.builtin.command: needs-restarting -r
-
-- name: Get timestamp from the system
-  shell: "date"
-  register: end_date
-  become: false
+- include_tasks: a_start_date
+- include_tasks: update
+- include_tasks: check_restart
+- include_tasks: a_end_date

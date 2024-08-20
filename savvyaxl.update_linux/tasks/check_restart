@@ -1,0 +1,11 @@
+- name: Get the uptime, verify reboot
+  command: uptime
+  register: uptime
+  ignore_errors: yes
+
+- name: check to see if we need a reboot the second time
+  when: uptime is defined and needsrestart.rc == 1
+  become: true
+  register: needsrestart2
+  ignore_errors: yes
+  ansible.builtin.command: needs-restarting -r
