@@ -25,6 +25,12 @@ ansible_ssh_port=5986
 ansible_winrm_transport=ntlm
 ansible_winrm_server_cert_validation=ignore
 
+[windows_desktop:vars]
+ansible_connection=winrm
+ansible_ssh_port=5986
+ansible_winrm_transport=ntlm
+ansible_winrm_server_cert_validation=ignore
+
 [all_update:children]
 update
 windows
