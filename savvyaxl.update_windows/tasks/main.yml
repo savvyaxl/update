@@ -1,55 +1,61 @@
 ---
 # tasks file for savvyaxl.updade_windows
-- name: Check value for RebootPending
-  register: rebootpending
-  ansible.windows.win_powershell: 
-    script: Test-Path 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending'
+block:
+  - name: Check value for RebootPending
+    register: rebootpending
+    ansible.windows.win_powershell: 
+      script: Test-Path 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending'
 
-- name: Ensure WinRM starts when the system has settled and is ready to work reliably
-  when: rebootpending.output[0]
-  ansible.windows.win_service:
-    name: WinRM
-    start_mode: delayed
+  - name: Ensure WinRM starts when the system has settled and is ready to work reliably
+    when: rebootpending.output[0]
+    ansible.windows.win_service:
+      name: WinRM
+      start_mode: delayed
 
-- name: Reboot if RebootPending value is True
-  when: rebootpending.output[0]
-  ansible.windows.win_reboot: 
-    reboot_timeout: 3600
-    post_reboot_delay: 600
+  - name: Reboot if RebootPending value is True
+    when: rebootpending.output[0]
+    ansible.windows.win_reboot: 
+      reboot_timeout: 3600
+      post_reboot_delay: 600
 
-- name: update
-  ignore_errors: true
-  become: true
-  become_method: runas
-  become_user: SYSTEM
-  register: win_update
-  ansible.windows.win_updates:
-    category_names: '*'
-    reboot: false
-    reject_list:
-    - Lenovo - Input - USB Enhanced Performance Keyboard
+  - name: update
+    ignore_errors: true
+    become: true
+    become_method: runas
+    become_user: SYSTEM
+    register: win_update
+    ansible.windows.win_updates:
+      category_names: '*'
+      reboot: false
+      reject_list:
+      - Lenovo - Input - USB Enhanced Performance Keyboard
 
-- name: Initialize rebooted variable
-  ansible.builtin.set_fact:
-    win_reboot:
-      rebooted: false
+  - name: Initialize rebooted variable
+    ansible.builtin.set_fact:
+      win_reboot:
+        rebooted: false
 
-- name: Reboot the machine with all defaults
-  register: win_reboot
-  when: do_reboot and win_update.reboot_required
-  ansible.windows.win_reboot:
-    reboot_timeout: 3600
-    post_reboot_delay: 600
+  - name: Reboot the machine with all defaults
+    register: win_reboot
+    when: do_reboot and win_update.reboot_required
+    ansible.windows.win_reboot:
+      reboot_timeout: 3600
+      post_reboot_delay: 600
 
-- name: Windows up time
-  register: uptime
-  ansible.windows.win_powershell:
-    script: |
-      $current = (Get-CimInstance -ClassName Win32_OperatingSystem -Property LastBootUpTime).LastBootUpTime
-      $end= Get-Date
-      $diff= New-TimeSpan -Start $current -End $end
-      Write-Output "Uptime: $diff"
+  - name: Windows up time
+    register: uptime
+    ansible.windows.win_powershell:
+      script: |
+        $current = (Get-CimInstance -ClassName Win32_OperatingSystem -Property LastBootUpTime).LastBootUpTime
+        $end= Get-Date
+        $diff= New-TimeSpan -Start $current -End $end
+        Write-Output "Uptime: $diff"
 
-- name: Debug
-  ansible.builtin.debug:
-    var: win_update
+  - name: Debug
+    ansible.builtin.debug:
+      var: win_update
+
+rescue:
+  - name: Print when errors
+    ansible.builtin.debug:
+      msg: 'I caught an error, can do stuff here to fix it, :-)'
