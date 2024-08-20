@@ -1,6 +1,6 @@
 ---
 # tasks file for savvyaxl.updade_windows
-block:
+- block:
   - name: Check value for RebootPending
     register: rebootpending
     ansible.windows.win_powershell: 
@@ -55,7 +55,7 @@ block:
     ansible.builtin.debug:
       var: win_update
 
-rescue:
-  - name: Print when errors
-    ansible.builtin.debug:
-      msg: 'I caught an error, can do stuff here to fix it, :-)'
+  rescue:
+    - name: Print when errors
+      ansible.builtin.debug:
+        msg: 'I caught an error, can do stuff here to fix it, :-)'
