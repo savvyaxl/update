@@ -1,6 +1,4 @@
 <h1>{{ inventory_hostname | default(omit) }}</h1>
-<p><b>Start Time: {{ start_date.stdout | default(omit) }}</b></p>
-<p><b>End Time: {{ end_date.stdout | default(omit) }}</b></p>
 <p><b>{{ uptime.stdout | default(omit) }}</b></p>
 <p>{{ yum_updates.results | default(omit) }}</p>
 <p>{{ needsrestart.stdout_lines[-2:] | default(omit) }}</p>
