@@ -13,7 +13,6 @@
         path: "{{temp_dir}}"
         state: absent
 
-
     - name: create directory
       ansible.builtin.file:
         path: "{{temp_dir}}"
