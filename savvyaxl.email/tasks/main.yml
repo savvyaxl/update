@@ -1,22 +1,23 @@
 ---
-- name: summery is a table
-  ansible.builtin.shell: |
-    echo "<table>" > {{mail_body_file}}
+- block:
+  - name: summery is a table start
+    ansible.builtin.shell: |
+      echo "<table>" > {{mail_body_file}}
 
-- name: add the summery runs
-  ansible.builtin.shell: |
-    for x in {{temp_dir}}/summery.*.html
-    do
-    cat ${x}  >> {{mail_body_file}}
-    done
+  - name: add the summery runs
+    ansible.builtin.shell: |
+      for x in {{temp_dir}}/summery.*.html
+      do
+      cat ${x}  >> {{mail_body_file}}
+      done
 
-- name: summery is a table
-  ansible.builtin.shell: |
-    echo "</table>" >> {{mail_body_file}}
+  - name: summery is a table end
+    ansible.builtin.shell: |
+      echo "</table>" >> {{mail_body_file}}
 
-- name: summery is a table
-  ansible.builtin.shell: |
-    echo "</table>" >> {{mail_body_file}}
+  - name: summery is a table
+    ansible.builtin.shell: |
+      echo "</table>" >> {{mail_body_file}}
 
 - name: get the end time
   shell: |
