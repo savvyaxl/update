@@ -16,7 +16,7 @@ MY-DC-001
 #MY-DC-002
 MY-WS-001
 
-[windows_desktop]
+#[windows_desktop]
 DESKTOP-2NRMRN3 
 
 [windows:vars]
