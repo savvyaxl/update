@@ -1,31 +1,18 @@
-192.168.0.1
 
 [update]
-#4670k.nfs.info
-#node03.nfs.info
 node02.nfs.info
 node01.nfs.info
 host02.nfs.info ansible_host=192.168.122.1
-#mushimushi2.brazilsouth.cloudapp.azure.com ansible_user=azureuser
 
 [web]
 node01.nfs.info
 
 [windows]
 MY-DC-001
-#MY-DC-002
 MY-WS-001
-
-#[windows_desktop]
-DESKTOP-2NRMRN3 
+DESKTOP-2NRMRN3
 
 [windows:vars]
-ansible_connection=winrm
-ansible_ssh_port=5986
-ansible_winrm_transport=ntlm
-ansible_winrm_server_cert_validation=ignore
-
-[windows_desktop:vars]
 ansible_connection=winrm
 ansible_ssh_port=5986
 ansible_winrm_transport=ntlm
