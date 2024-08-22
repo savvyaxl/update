@@ -1,0 +1,11 @@
+- name: test the virt collection
+  hosts: "{{ my_hosts | default ('localhost')}}"
+  become: false
+  remote_user: ansible
+  gather_facts: false
+
+  tasks:
+    - name: List all VMs
+      community.libvirt.virt:
+        command: list_vms
+      register: all_vms
