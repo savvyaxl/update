@@ -1,6 +1,6 @@
 - name: test the virt collection
   hosts: "{{ my_hosts | default ('localhost')}}"
-  become: false
+  become: true
   remote_user: ansible
   gather_facts: false
 
