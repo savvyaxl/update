@@ -2,6 +2,14 @@
   ansible.builtin.setup:
     gather_subset:
       - 'all'
+      - dns
+      - ipv4
+      - "machine"
+      - "memtotal_mb"
+      - "selinux"
+      - "system_vendor"
+      - "processor_count"
+      - "processor_vcpus"
 
 - name: get some facts, debug
   ansible.builtin.debug:
