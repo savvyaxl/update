@@ -3,7 +3,6 @@
     gather_subset:
       - '!all'
       - dns
-      - ipv4
       - "machine"
       - "memtotal_mb"
       - "selinux"
