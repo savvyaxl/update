@@ -1,0 +1,9 @@
+- name: get some facts
+  ansible.builtin.setup:
+    gather_subset:
+      - 'all'
+
+- name: get some facts, debug
+  ansible.builtin.debug:
+    var: ansible
+
