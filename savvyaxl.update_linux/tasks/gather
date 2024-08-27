@@ -2,12 +2,7 @@
   ansible.builtin.setup:
     gather_subset:
       - '!all'
-      - dns
       - "machine"
-      - hardware
-      - "selinux"
-      - system
-      - "processor_count"
 
 
 - name: get some facts, debug
