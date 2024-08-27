@@ -1,7 +1,7 @@
 - name: get some facts
   ansible.builtin.setup:
     gather_subset:
-      - 'all'
+      - '!all'
       - dns
       - ipv4
       - "machine"
