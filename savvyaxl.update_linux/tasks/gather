@@ -4,9 +4,9 @@
       - '!all'
       - dns
       - "machine"
-      - "memtotal_mb"
+      - hardware
       - "selinux"
-      - "system_vendor"
+      - system
       - "processor_count"
       - "processor_vcpus"
 
