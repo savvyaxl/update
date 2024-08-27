@@ -8,7 +8,7 @@
       - "selinux"
       - system
       - "processor_count"
-      - "processor_vcpus"
+
 
 - name: get some facts, debug
   ansible.builtin.debug:
