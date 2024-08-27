@@ -3,7 +3,7 @@
   hosts: "{{ my_hosts | default ('update') }}"
   become: false
   remote_user: ansible
-  gather_facts: false
+  gather_facts: true
   order: sorted
   vars:
     myhosts: linux
