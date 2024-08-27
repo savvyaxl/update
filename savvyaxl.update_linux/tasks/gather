@@ -5,5 +5,5 @@
 
 - name: get some facts, debug
   ansible.builtin.debug:
-    var: ansible
+    var: ansible_facts
 
