@@ -5,10 +5,6 @@
   remote_user: ansible
   gather_facts: false
   order: sorted
-  vars:
-    myhosts: linux
-    temp_dir: /tmp/hsuteo_email
-    temp_file: "{{temp_dir}}/file"
 
   pre_tasks:
     - name: j2 summery

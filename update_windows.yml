@@ -2,12 +2,6 @@
 - name: Update Windows
   hosts: "{{ my_win_hosts | default ('windows') }}"
   gather_facts: false
-  #ignore_unreachable : true
-  #serial: 1
-  vars:
-    myhosts: windows
-    temp_dir: /tmp/hsuteo_email
-    temp_file: "{{temp_dir}}/file"
 
   pre_tasks:
     - name: j2 summery

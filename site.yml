@@ -29,10 +29,24 @@
         create: true
 
 - name: update windows
+  vars:
+    temp_dir: /tmp/hsuteo_email
   ansible.builtin.import_playbook: update_windows.yml
 
 - name: update linux
+  vars:
+    temp_dir: /tmp/hsuteo_email
   ansible.builtin.import_playbook: update_linux.yml
 
 - name: send email
+  vars:
+    temp_dir: /tmp/hsuteo_email
+    temp_file: "/tmp/hsuteo_email/file"
+    mail_body_file: "/tmp/hsuteo_email/email_body.html"
+    subject_name: System Update for Linux and Windows
   ansible.builtin.import_playbook: update_email.yml
+
+- name: cleanup
+  ansible.builtin.file:
+    path: "{{temp_dir}}"
+    state: absent
