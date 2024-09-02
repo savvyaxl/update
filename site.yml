@@ -50,6 +50,7 @@
   hosts: localhost
   become: false
   gather_facts: false
-  ansible.builtin.file:
-    path: "{{temp_dir}}"
-    state: absent
+  tasks:
+    ansible.builtin.file:
+      path: "{{temp_dir}}"
+      state: absent
