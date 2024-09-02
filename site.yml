@@ -51,6 +51,6 @@
   become: false
   gather_facts: false
   tasks:
-    ansible.builtin.file:
+    - ansible.builtin.file:
       path: "{{temp_dir}}"
       state: absent
