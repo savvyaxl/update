@@ -51,6 +51,7 @@
   become: false
   gather_facts: false
   tasks:
-    - ansible.builtin.file:
-      path: "{{temp_dir}}"
-      state: absent
+    - name: delete files
+      ansible.builtin.file:
+        path: /tmp/hsuteo_email
+        state: absent
