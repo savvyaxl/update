@@ -1,6 +1,7 @@
 ---
 # defaults file for savvyaxl.update_os
 no_restart:
+  - node01.nfs.info
   - node02.nfs.info
   - localhost
   - host02.nfs.info

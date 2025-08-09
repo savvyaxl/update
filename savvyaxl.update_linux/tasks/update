@@ -13,10 +13,17 @@
   register: needsrestart
   changed_when: needsrestart.rc == 1
   ignore_errors: yes
-  failed_when: false
-  notify:
-    - Perform reboot
-    - Wait for 200 seconds after the reboot
+  failed_when: needsrestart.rc > 1
 
-- name: Flush handlers
-  meta: flush_handlers
+- name: Perform reboot
+  when: inventory_hostname not in no_restart and needsrestart.rc == 1
+  become: true
+  async: 120
+  poll: 10
+  timeout: 200
+  ignore_errors: yes
+  failed_when: false
+  register: rebooted
+  ansible.builtin.shell: sleep 5 && reboot
+
+

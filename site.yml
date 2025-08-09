@@ -28,15 +28,15 @@
         path: "{{temp_file}}"
         create: true
 
-- name: update windows
-  vars:
-    temp_dir: /tmp/hsuteo_email
-  ansible.builtin.import_playbook: update_windows.yml
-
 - name: update linux
   vars:
     temp_dir: /tmp/hsuteo_email
   ansible.builtin.import_playbook: update_linux.yml
+
+#- name: update windows
+#  vars:
+#    temp_dir: /tmp/hsuteo_email
+#  ansible.builtin.import_playbook: update_windows.yml
 
 - name: send email
   vars:
