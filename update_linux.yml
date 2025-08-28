@@ -10,20 +10,20 @@
     - name: j2 summery
       delegate_to: localhost
       ansible.builtin.template:
-        src: savvyaxl.update_linux/templates/summery_fail.j2
+        src: roles/savvyaxl.update_linux/templates/summery_fail.j2
         dest: "/{{temp_dir}}/summery.{{inventory_hostname}}.html"
 
   post_tasks:
     - name: Use j2 template to create individual body part
       delegate_to: localhost
       ansible.builtin.template:
-        src: savvyaxl.update_linux/templates/body.j2
+        src: roles/savvyaxl.update_linux/templates/body.j2
         dest: "/{{temp_dir}}/body.{{inventory_hostname}}.html"
 
     - name: j2 summery
       delegate_to: localhost
       ansible.builtin.template:
-        src: savvyaxl.update_linux/templates/summery.j2
+        src: roles/savvyaxl.update_linux/templates/summery.j2
         dest: "/{{temp_dir}}/summery.{{inventory_hostname}}.html"
 
   roles:
